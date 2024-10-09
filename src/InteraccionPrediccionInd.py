@@ -24,6 +24,7 @@ lista_festivos = pd.to_datetime(['2024-01-01', '2024-12-25'])
 
 # Función para generar características necesarias en el modelo
 def generar_caracteristicas_fecha(fecha_str):
+    ano=fecha_str[0:4]
     fecha = pd.to_datetime(fecha_str)
     dia_semana = fecha.weekday()
 
@@ -47,6 +48,7 @@ def generar_caracteristicas_fecha(fecha_str):
 
     # Diccionario a devolver
     return {
+        'año':ano,
         'fecha': fecha_seg,
         'findesemana': findesemana,
         'festivos': festivos,
