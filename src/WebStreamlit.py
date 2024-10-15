@@ -1,6 +1,6 @@
 ##Streamlit para la web de interaccion con el usuario 
 #el comando para realizar la peticion de url de la we:
-#streamlit run WebStreamlit.py
+#python -m streamlit run WebStreamlit.py
 
 import streamlit as st
 import numpy as np
@@ -9,6 +9,7 @@ from sklearn.preprocessing import MinMaxScaler
 import pickle
 import datetime
 import pandas as pd
+import random
 
 #Importo df
 df_ind = pd.read_csv('../data/DF_modelos/df_industrial_total.csv')
@@ -61,30 +62,50 @@ def predecir_residencial(datos_usuario_res):
     return predRes
 
 def predecir_servicios(datos_usuario_ser):
-    # Predecir los valores de prueba
-    datos_usuario_scaled_ser= scaler_X_serv.transform(datos_usuario_ser)
-    #Crear la secuencia para el modelo
-    datos_ususario_seq_res = datos_usuario_scaled_ser.reshape((1, 2, 6))
-    #realizar la prediccion
-    predSer_scaled = modelSer.predict(datos_usuario_scaled_ser)
-    # Desescalar las predicciones y los valores reales para comparar
+    # Escalar los datos del usuario
+    datos_usuario_scaled_ser = scaler_X_serv.transform(datos_usuario_ser)
+    # Ajustar la forma del input a (1, 2, 6) para la predicción
+    datos_usuario_seq_ser = datos_usuario_scaled_ser.reshape((1, 2, 6))
+    # Realizar la predicción
+    predSer_scaled = modelSer.predict(datos_usuario_seq_ser)
+    # Desescalar la predicción
     predSer = scaler_y_serv.inverse_transform(predSer_scaled)
     return predSer
 
+
 # Página principal
 def pagina_principal():
+    # Simula una recarga añadiendo un parámetro aleatorio a la URL.
+    #st.experimental_set_query_params(rerun=str(random.randint(0, 10000)))
     st.title("AMH Solutions")
-    st.sidebar.title("Navegación")
-    page = st.sidebar.radio("Selecciona el sector", ["Inicio", "Industrial", "Residencial", "Servicios"])
+    st.text("Binvenido a la plataforma de preddicion de consumo de Barcelona")
+    #st.sidebar.title("Navegación")
+    #page = st.sidebar.radio("Selecciona el sector", ["Inicio", "Industrial", "Residencial", "Servicios"])
 
-    if page == "Industrial":
-        st.session_state["page"] = "industrial"
-    elif page == "Residencial":
-        st.session_state["page"] = "residencial"
-    elif page == "Servicios":
-        st.session_state["page"] = "servicios"
-    else:
-        st.session_state["page"] = "home"
+    # Centramos las opciones usando columnas
+    col1, col2, col3 = st.columns([1, 2, 1])  # Columna del medio más ancha
+
+    with col2:
+        st.subheader("Selecciona el sector que desea predecir:")
+        
+        # Selector de radio para elegir sector
+        sector = st.radio(
+            "Elige un sector para continuar:",
+            ('Industrial', 'Residencial', 'Servicios'),
+            index=0
+        )
+
+        # Botón de aceptar
+        if st.button("Aceptar"):
+
+            if sector == "Industrial":
+                st.session_state["page"] = "industrial"
+            elif sector == "Residencial":
+                st.session_state["page"] = "residencial"
+            elif sector == "Servicios":
+                st.session_state["page"] = "servicios"
+            else:
+                st.session_state["page"] = "home"
 
 
 
@@ -169,8 +190,7 @@ def pagina_residencial():
 
     t_1=df_res['consumo'].iloc[-1]
 
-    datos_usuario_res =  np.array([[findesemana, tmed, PIB, t_1], 
-                        [findesemana, tmed, PIB, t_1]])
+    datos_usuario_res =  np.array([[findesemana, tmed, PIB, t_1]])
 
     if st.button("Predecir Consumo"):
         prediction_res = predecir_residencial(datos_usuario_res)
