@@ -10,11 +10,72 @@ import pickle
 import datetime
 import pandas as pd
 import random
+import base64
+
+def get_base64_of_bin_file(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+# Ruta de la imagen local
+img_path = "../data/imagen/fondo3.jpg"
+
+# Convertimos la imagen a Base64
+img_base64 = get_base64_of_bin_file(img_path)
+
+# CSS para aplicar la imagen de fondo
+page_bg_img = f'''
+<style>
+/* Fondo de la aplicación */
+.stApp {{
+    background-image: url("data:image/jpg;base64,{img_base64}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}}
+
+/* Color de texto en toda la app */
+h1, h2, h3, h4, h5, p, label, div, .stMarkdown {{
+    color: white !important;
+}}
+
+/* Botones personalizados oscuros */
+div.stButton > button {{
+    background-color: #333333 !important;  /* Gris oscuro */
+    color: white !important;               /* Texto blanco */
+    border: 1px solid #444444;             /* Borde más claro */
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}}
+
+div.stButton > button:hover {{
+    background-color: #555555 !important;  /* Gris más claro al pasar el cursor */
+    border-color: #666666;
+}}
+
+/* Mensajes de éxito más resaltados */
+.stAlert[data-baseweb="notification"] {{
+    background-color: #198754 !important;  /* Verde intenso */
+    color: white !important;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 18px;
+}}
+</style>
+'''
+
+# Incluir CSS en la aplicación
+st.markdown(page_bg_img, unsafe_allow_html=True)
 
 #Importo df
-df_ind = pd.read_csv('../data/DF_modelos/df_industrial_total.csv')
-df_res = pd.read_csv('../data/DF_modelos/df_residencial_total.csv')
-df_serv = pd.read_csv('../data/DF_modelos/df_servicios_total.csv')
+df_ind = pd.read_csv('../data/DF_modelos/df_industrial_modelo.csv')
+df_res = pd.read_csv('../data/DF_modelos/df_residencial_modelo.csv')
+df_serv = pd.read_csv('../data/DF_modelos/df_servicios_modelo.csv')
 
 #Importamos modelo
 modelInd = load_model('../models/modelo_industrial_def.h5')
@@ -83,7 +144,7 @@ def pagina_principal():
     #page = st.sidebar.radio("Selecciona el sector", ["Inicio", "Industrial", "Residencial", "Servicios"])
 
     # Centramos las opciones usando columnas
-    col1, col2, col3 = st.columns([1, 2, 1])  # Columna del medio más ancha
+    col1, col2, col3 = st.columns([1, 2, 1])
 
     with col2:
         st.subheader("Selecciona el sector que desea predecir:")
@@ -119,7 +180,7 @@ def pagina_industrial():
         "Selecciona una fecha:",
         value=datetime.date(2024, 5, 1),   # Valor predeterminado
         min_value=datetime.date(2024, 5, 1),  # Fecha mínima
-        max_value=datetime.date(2024, 5, 2)  # Fecha máxima
+        max_value=datetime.date(2024, 5, 5)  # Fecha máxima
     )
 
     dia_semana = fecha.weekday()
@@ -129,22 +190,25 @@ def pagina_industrial():
     festivos = 1 if fecha in lista_festivos else 0
 
     temperatura_def = 21
-    temperatura = st.number_input("temperatura media", min_value=0, value=35)
+    temperatura = st.number_input("temperatura media", min_value=0, value=45)
     
-    if temperatura < 0 or temperatura > 35:
+    if temperatura < 0 or temperatura > 45:
         st.error("Por favor, introduce una temperatura válida entre 0 y 35.")
 
-    tmed = temperatura_def if temperatura == 35 else temperatura
+    tmed = temperatura_def if temperatura == 45 else temperatura
 
     t_1=df_ind['consumo'].iloc[-1]
 
     COVID=0
 
-    datos_usuario_ind =  np.array([[findesemana, festivos, COVID, tmed, t_1], 
-                        [findesemana, festivos, COVID, tmed, t_1]])
+    datos_anteriro_ind = df_ind.iloc[-1][['findesemana', 'festivos', 'COVID', 'tmed', 't-1']].values
+    # Crear la lista de nuevos datos proporcionados por el usuario (debe tener la misma longitud)
+    datos_usuario_ind = np.array([findesemana, festivos, COVID, tmed, t_1])
+    # Combinar los datos anteriores y los proporcionados en un solo array
+    datos_ind = np.vstack([datos_anteriro_ind, datos_usuario_ind])
 
     if st.button("Predecir Consumo"):
-        prediction_ind = predecir_industrial(datos_usuario_ind)
+        prediction_ind = predecir_industrial(datos_ind)
         # Asegúrate de que prediction_ind es un número escalar
         valor_prediccion = prediction_ind[0, 0]
 
@@ -167,7 +231,7 @@ def pagina_residencial():
         "Selecciona una fecha:",
         value=datetime.date(2024, 5, 1),   # Valor predeterminado
         min_value=datetime.date(2024, 5, 1),  # Fecha mínima
-        max_value=datetime.date(2024, 5, 2)  # Fecha máxima
+        max_value=datetime.date(2024, 5, 5)  # Fecha máxima
     )
 
     dia_semana = fecha.weekday()
@@ -179,12 +243,12 @@ def pagina_residencial():
     festivos = 1 if fecha in lista_festivos else 0
 
     temperatura_def = 21
-    temperatura = st.number_input("temperatura media", min_value=0, value=35)
+    temperatura = st.number_input("temperatura media", min_value=0, value=45)
     
-    if temperatura < 0 or temperatura > 35:
+    if temperatura < 0 or temperatura > 45:
         st.error("Por favor, introduce una temperatura válida entre 0 y 35.")
 
-    tmed = temperatura_def if temperatura == 35 else temperatura
+    tmed = temperatura_def if temperatura == 45 else temperatura
 
     PIB = 77268
 
@@ -214,7 +278,7 @@ def pagina_servicios():
         "Selecciona una fecha:",
         value=datetime.date(2024, 5, 1),   # Valor predeterminado
         min_value=datetime.date(2024, 5, 1),  # Fecha mínima
-        max_value=datetime.date(2024, 5, 2)  # Fecha máxima
+        max_value=datetime.date(2024, 5, 5)  # Fecha máxima
     )
 
     dia_semana = fecha.weekday()
@@ -226,12 +290,12 @@ def pagina_servicios():
     festivos = 1 if fecha in lista_festivos else 0
 
     temperatura_def = 21
-    temperatura = st.number_input("temperatura media", min_value=0, value=35)
+    temperatura = st.number_input("temperatura media", min_value=0, value=45)
     
-    if temperatura < 0 or temperatura > 35:
+    if temperatura < 0 or temperatura > 45:
         st.error("Por favor, introduce una temperatura válida entre 0 y 35.")
 
-    tmed = temperatura_def if temperatura == 35 else temperatura
+    tmed = temperatura_def if temperatura == 45 else temperatura
     
 
     t_1=df_res['consumo'].iloc[-1]
@@ -240,8 +304,13 @@ def pagina_servicios():
 
     pernoctaciones=743000
 
-    datos_usuario_ser =  np.array([[findesemana, festivos, pernoctaciones, tmed, poblacion, t_1], 
-                                    [findesemana, festivos, pernoctaciones, tmed, poblacion, t_1]])
+
+
+    datos_anteriro_ser = df_serv.iloc[-1][['findesemana', 'festivos', 'pernoctaciones', 'tmed', 'poblacion', 't-1']].values
+    # Crear la lista de nuevos datos proporcionados por el usuario (debe tener la misma longitud)
+    datos_usuario_ser = np.array([findesemana, festivos, pernoctaciones, tmed, poblacion, t_1])
+    # Combinar los datos anteriores y los proporcionados en un solo array
+    datos_ind = np.vstack([datos_anteriro_ser, datos_usuario_ser])
 
     if st.button("Predecir Consumo"):
         prediction_ser = predecir_servicios(datos_usuario_ser)
