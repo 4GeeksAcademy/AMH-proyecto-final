@@ -19,6 +19,7 @@ def get_base64_of_bin_file(bin_file):
 
 # Obtener la ruta base del directorio actual
 base_dir = os.path.dirname(__file__)
+
 # Construir la ruta a la imagen
 img_path = os.path.join(base_dir, '..', 'data', 'imagen', 'fondo4.jpg')  # Cambia el nombre de fondo1.jpg si es necesario
 
@@ -77,6 +78,9 @@ div.stButton > button:hover {{
 # Incluir CSS en la aplicación
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
+# Obtener la ruta base del directorio actual
+base_dir = os.path.dirname(__file__)
+
 #Importo df
 df_ind_path = os.path.join(base_dir, 'data', 'DF_modelos', 'df_industrial_modelo.csv')
 df_ind = pd.read_csv(df_ind_path)
@@ -85,14 +89,19 @@ df_res = pd.read_csv(df_res_path)
 df_serv_path = os.path.join(base_dir, 'data', 'DF_modelos', 'df_servicios_modelo.csv')
 df_serv = pd.read_csv(df_serv_path)
 
-#Importamos modelo
+# Obtener la ruta base del directorio actual
+base_dir = os.path.dirname(__file__)
 
+#Importamos modelo
 modelInd_path = os.path.join(base_dir, 'models', 'modelo_industrial_def.h5')
 modelInd = pd.read_csv(modelInd_path)
 modelRes_path = os.path.join(base_dir, 'models', 'modelo_residencial_def.h5')
 modelRes = pd.read_csv(modelRes_path)
 modelSer_path = os.path.join(base_dir, 'models', 'modelo_servicios_def.h5')
 modelSer = pd.read_csv(modelSer_path)
+
+# Obtener la ruta base del directorio actual
+base_dir = os.path.dirname(__file__)
 
 #Importamos escalas
 scaler_X_ind_path = os.path.join(base_dir, 'data', 'scalers', 'scaler_X_ind.pkl')
