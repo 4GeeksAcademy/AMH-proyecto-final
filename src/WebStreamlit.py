@@ -18,7 +18,7 @@ def get_base64_of_bin_file(bin_file):
     return base64.b64encode(data).decode()
 
 # Ruta de la imagen local
-img_path = "../data/imagen/fondo3.jpg"
+img_path = "../data/imagen/fondo4.jpg"
 
 # Convertimos la imagen a Base64
 img_base64 = get_base64_of_bin_file(img_path)
@@ -213,7 +213,7 @@ def pagina_industrial():
         valor_prediccion = prediction_ind[0, 0]
 
         # Mostrar el resultado correctamente
-        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion:.2f}")
+        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion:.2f} KW")
         #st.write(f"Forma de prediction_ind: {prediction_ind.shape}, Valor: {prediction_ind}")
 
     if st.sidebar.button("Volver al inicio"):
@@ -261,7 +261,7 @@ def pagina_residencial():
         valor_prediccion_res = prediction_res[0, 0]
 
         # Mostrar el resultado correctamente
-        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion_res:.2f}")
+        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion_res:.2f} KW")
         #st.write(f"Forma de prediction_ind: {prediction_res.shape}, Valor: {prediction_res}")
 
     if st.sidebar.button("Volver al inicio"):
@@ -317,7 +317,7 @@ def pagina_servicios():
         valor_prediccion_ser = prediction_ser[0, 0]
 
         # Mostrar el resultado correctamente
-        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion_ser:.2f}")
+        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion_ser:.2f} KW")
         #st.write(f"Forma de prediction_ind: {prediction_ser.shape}, Valor: {prediction_ser}")
 
 
