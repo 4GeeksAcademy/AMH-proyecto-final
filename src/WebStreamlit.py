@@ -11,28 +11,33 @@ import datetime
 import pandas as pd
 import random
 import base64
+import os
 
 def get_base64_of_bin_file(bin_file):
     with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
+        return base64.b64encode(f.read()).decode('utf-8')
 
-# Ruta de la imagen local
-img_path = "../data/imagen/fondo4.jpg"
+# Obtener la ruta base del directorio actual
+base_dir = os.path.dirname(__file__)
+# Construir la ruta a la imagen
+img_path = os.path.join(base_dir, '..', 'data', 'imagen', 'fondo4.jpg')  # Cambia el nombre de fondo1.jpg si es necesario
 
-# Convertimos la imagen a Base64
-img_base64 = get_base64_of_bin_file(img_path)
+# Convertir la imagen a base64
+try:
+    img_base64 = get_base64_of_bin_file(img_path)
+    # Usar la imagen en Streamlit
+    st.image(f"data:image/jpeg;base64,{img_base64}")
+except FileNotFoundError:
+    st.error("El archivo de imagen no se encontró. Verifica la ruta.")
 
 # CSS para aplicar la imagen de fondo
 page_bg_img = f'''
 <style>
-/* Fondo de la aplicación */
-.stApp {{
-    background-image: url("data:image/jpg;base64,{img_base64}");
+.reportview-container {{
+    background: url(data:image/jpeg;base64,{img_base64}) no-repeat center center fixed; 
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    height: 100vh;  /* Asegúrate de que cubra toda la altura */
+    color: white;   /* Color del texto para contraste */
 }}
 
 /* Color de texto en toda la app */
