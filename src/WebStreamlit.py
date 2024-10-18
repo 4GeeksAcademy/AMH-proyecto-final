@@ -93,11 +93,11 @@ df_serv = pd.read_csv(df_serv_path)
 base_dir = os.path.dirname(__file__)
 
 #Importamos modelo
-modelInd_path = os.path.join(base_dir, '..', 'models', 'modelo_industrial_def.h5')
+modelInd_path = os.path.join(base_dir, '..', 'models', 'modelo_industrial_Def.h5')
 modelInd = load_model(modelInd_path)
-modelRes_path = os.path.join(base_dir, '..', 'models', 'modelo_residencial_def.h5')
+modelRes_path = os.path.join(base_dir, '..', 'models', 'modelo_residencial_Def.h5')
 modelRes = load_model(modelRes_path)
-modelSer_path = os.path.join(base_dir, '..', 'models', 'modelo_servicios_def.h5')
+modelSer_path = os.path.join(base_dir, '..', 'models', 'modelo_servicios_Def.h5')
 modelSer = load_model(modelSer_path)
 
 # Obtener la ruta base del directorio actual
