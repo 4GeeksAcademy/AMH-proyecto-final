@@ -175,7 +175,7 @@ def pagina_industrial():
         # Asegúrate de que prediction_ind es un número escalar
         valor_prediccion = prediction_ind[0, 0]
         # Mostrar el resultado correctamente
-        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion:.2f} KW")
+        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion:.2f} MWh")
         #st.write(f"Forma de prediction_ind: {prediction_ind.shape}, Valor: {prediction_ind}")
     if st.sidebar.button("Volver al inicio"):
         st.session_state["page"] = "home"
@@ -207,7 +207,7 @@ def pagina_residencial():
         prediction_res = predecir_residencial(datos_usuario_res)
         valor_prediccion_res = prediction_res[0, 0]
         # Mostrar el resultado correctamente
-        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion_res:.2f} KW")
+        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion_res:.2f} MWh")
         #st.write(f"Forma de prediction_ind: {prediction_res.shape}, Valor: {prediction_res}")
     if st.sidebar.button("Volver al inicio"):
         st.session_state["page"] = "home"
@@ -244,7 +244,7 @@ def pagina_servicios():
         prediction_ser = predecir_servicios(datos_usuario_ser)
         valor_prediccion_ser = prediction_ser[0, 0]
         # Mostrar el resultado correctamente
-        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion_ser:.2f} KW")
+        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion_ser:.2f} MWh")
         #st.write(f"Forma de prediction_ind: {prediction_ser.shape}, Valor: {prediction_ser}")
     if st.sidebar.button("Volver al inicio"):
         st.session_state["page"] = "home"

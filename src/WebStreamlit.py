@@ -82,44 +82,44 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 base_dir = os.path.dirname(__file__)
 
 #Importo df
-df_ind_path = os.path.join(base_dir, 'data', 'DF_modelos', 'df_industrial_modelo.csv')
+df_ind_path = os.path.join(base_dir, '..','data', 'DF_modelos', 'df_industrial_modelo.csv')
 df_ind = pd.read_csv(df_ind_path)
-df_res_path = os.path.join(base_dir, 'data', 'DF_modelos', 'df_residencial_modelo.csv')
+df_res_path = os.path.join(base_dir, '..', 'data', 'DF_modelos', 'df_residencial_modelo.csv')
 df_res = pd.read_csv(df_res_path)
-df_serv_path = os.path.join(base_dir, 'data', 'DF_modelos', 'df_servicios_modelo.csv')
+df_serv_path = os.path.join(base_dir, '..','data', 'DF_modelos', 'df_servicios_modelo.csv')
 df_serv = pd.read_csv(df_serv_path)
 
 # Obtener la ruta base del directorio actual
 base_dir = os.path.dirname(__file__)
 
 #Importamos modelo
-modelInd_path = os.path.join(base_dir, 'models', 'modelo_industrial_def.h5')
-modelInd = pd.read_csv(modelInd_path)
-modelRes_path = os.path.join(base_dir, 'models', 'modelo_residencial_def.h5')
-modelRes = pd.read_csv(modelRes_path)
-modelSer_path = os.path.join(base_dir, 'models', 'modelo_servicios_def.h5')
-modelSer = pd.read_csv(modelSer_path)
+modelInd_path = os.path.join(base_dir, '..', 'models', 'modelo_industrial_def.h5')
+modelInd = load_model(modelInd_path)
+modelRes_path = os.path.join(base_dir, '..', 'models', 'modelo_residencial_def.h5')
+modelRes = load_model(modelRes_path)
+modelSer_path = os.path.join(base_dir, '..', 'models', 'modelo_servicios_def.h5')
+modelSer = load_model(modelSer_path)
 
 # Obtener la ruta base del directorio actual
 base_dir = os.path.dirname(__file__)
 
 #Importamos escalas
-scaler_X_ind_path = os.path.join(base_dir, 'data', 'scalers', 'scaler_X_ind.pkl')
+scaler_X_ind_path = os.path.join(base_dir, '..','data', 'scalers', 'scaler_X_ind.pkl')
 with open(scaler_X_ind_path, 'rb') as f:
     scaler_X_ind = pickle.load(f)
-scaler_y_ind_path = os.path.join(base_dir, 'data', 'scalers', 'scaler_y_ind.pkl')
+scaler_y_ind_path = os.path.join(base_dir, '..','data', 'scalers', 'scaler_y_ind.pkl')
 with open(scaler_y_ind_path, 'rb') as f:
     scaler_y_ind = pickle.load(f)
-scaler_X_res_path = os.path.join(base_dir, 'data', 'scalers', 'scaler_X_res.pkl')
+scaler_X_res_path = os.path.join(base_dir, '..','data', 'scalers', 'scaler_X_res.pkl')
 with open(scaler_X_res_path, 'rb') as f:
     scaler_X_res = pickle.load(f)
-scaler_y_res_path = os.path.join(base_dir, 'data', 'scalers', 'scaler_y_res.pkl')
+scaler_y_res_path = os.path.join(base_dir, '..','data', 'scalers', 'scaler_y_res.pkl')
 with open(scaler_y_res_path, 'rb') as f:
     scaler_y_res = pickle.load(f)
-scaler_X_serv_path = os.path.join(base_dir, 'data', 'scalers', 'scaler_X_serv.pkl')
+scaler_X_serv_path = os.path.join(base_dir, '..','data', 'scalers', 'scaler_X_serv.pkl')
 with open(scaler_X_serv_path, 'rb') as f:
     scaler_X_serv = pickle.load(f)
-scaler_y_serv_path = os.path.join(base_dir, 'data', 'scalers', 'scaler_y_serv.pkl')
+scaler_y_serv_path = os.path.join(base_dir, '..','data', 'scalers', 'scaler_y_serv.pkl')
 with open(scaler_y_serv_path, 'rb') as f:
     scaler_y_serv = pickle.load(f)
 
