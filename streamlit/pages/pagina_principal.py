@@ -2,9 +2,13 @@ import streamlit as st
 import numpy as np
 from funciones import cargar_css
 from streamlit_extras.switch_page_button import switch_page
+import os
 
-# Aplicamos el CSS personalizado y el fondo
-cargar_css('style/styles.css')
+#Directorio actual
+base_dir = os.path.dirname(__file__)
+parent_dir = os.path.dirname(base_dir)
+# Cargar DataFrames
+cargar_css(os.path.join(parent_dir, 'style', 'styles.css'))
 
 st.title("AMH Solutions")
 st.text("Binvenido a la plataforma de preddicion de consumo de Barcelona")

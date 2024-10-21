@@ -5,9 +5,9 @@ import os
 
 #Directorio actual
 base_dir = os.path.dirname(__file__)
-
 # Cargar DataFrames
-cargar_css(os.path.join(base_dir, '..','streamlit', 'style', 'styles.css'))
+cargar_css(os.path.join(base_dir, 'style', 'styles.css'))
+
 
 def main():
     if "page" not in st.session_state:

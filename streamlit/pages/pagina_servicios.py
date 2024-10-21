@@ -3,9 +3,13 @@ import datetime
 import numpy as np
 from funciones import lista_festivos, predecir_servicios, df_serv, cargar_css
 from streamlit_extras.switch_page_button import switch_page
+import os
 
-# Aplicamos el CSS personalizado y el fondo
-cargar_css('style/styles.css')
+#Directorio actual
+base_dir = os.path.dirname(__file__)
+parent_dir = os.path.dirname(base_dir)
+# Cargar DataFrames
+cargar_css(os.path.join(parent_dir, 'style', 'styles.css'))
 
 st.title("Predicción para Sector Servicios")
 fecha = st.date_input("Selecciona una fecha:", datetime.date(2024, 5, 1))
