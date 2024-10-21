@@ -2,6 +2,13 @@
 
 Este proyecto tiene como objetivo predecir el consumo de electricidad en la provincia de Barcelona utilizando datos históricos y técnicas de aprendizaje automático. Utilizamos datos climáticos, demográficos, macroeconómicos, shocks económicos, indicadores turísticos y días festivos para entrenar modelos que predigan el consumo de electricidad diario.
 
+
+## Web de predicción
+
+El enlace a la web en la nube es:
+- https://amh-barcelona-electricidad.streamlit.app/pagina_principal
+
+
 ## Estructura
 
 El proyecto está organizado en varias carpetas y archivos clave para gestionar los datos, los modelos y el código de la aplicación web. A continuación, se detallan las secciones principales del proyecto:
@@ -14,12 +21,17 @@ El proyecto está organizado en varias carpetas y archivos clave para gestionar 
   - `processed` - Contiene datos procesados.
   - `scalers` - Guarda los archivos de scalers utilizados para normalizar los datos para las peticiones del usuario.
 - `models` - Esta carpeta contiene los modelos predictivos entrenados guardados como archivos `.h5`.
-- `src` - Esta carpeta contiene el código fuente del proyecto, con diferentes scripts para la gestión del flujo de datos y la interacción con el usuario:
+- `src` - Esta carpeta contiene el código fuente del proyecto, con diferentes scripts para la gestión del flujo de datos y diversas pruebas de código:
   - `Procesado de datos` - Scripts relacionados con la limpieza y el preprocesamiento de los datos.
   - `Proceso de modelos` - Contiene scripts que realizan el entrenamiento y la evaluación de los modelos predictivos.
   - `Procesos prueba` - Carpeta para scripts de prueba de los modelos y de WebStreamlit. 
   - `StreamlitAntes.py` - Versión anterior del código de la aplicación web en Streamlit.
   - `WebStreamlit.py` - Versión actualizada de la aplicación web implementada en Streamlit, que permite a los usuarios interactuar con los modelos y predecir el consumo de electricidad. 
+- `stremalit` - Esta carpeta contiene el código de la creación de la web para la interacción con el usuario:
+  - `pages` - Scripts relacionados con la visualización e interación del usuario con cada una de las diferentes páginas de la web en stremlit share.
+  - `style` - Contiene un único archivo .css que nos permite realizar la personalización del contenido de la Web.
+  - `funciones.py` - Archivo que almacena todas las funciones necesarias para la interacción del usuario en las predicciones deseadas.
+  - `mainStreamlit.py` - Archivo principal de manejo de la Web. 
 - `requirements.txt` - Archivo que contiene las dependencias y bibliotecas necesarias para ejecutar el proyecto.
     
 ## Instlación de dependencias
@@ -42,7 +54,7 @@ pip install -r requirements.txt
 
 Para ejecutar el modelo de predicción de consumo, ejecuta el siguiente comando:
 ```bash
- python src/main.py 
+python -m streamlit run streamlit/mainStreamlit.py
 ```
 
 ## Datos

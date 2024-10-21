@@ -2,6 +2,13 @@
 
 This project aims to predict electricity consumption in the province of Barcelona using historical data and machine learning techniques. We use climate, demographic, macroeconomic, economic shocks, tourism indicators, and holiday data to train models that predict daily electricity consumption.
 
+
+## prediction Web
+
+The URL to the Web in the cloud:
+- https://amh-barcelona-electricidad.streamlit.app/pagina_principal
+
+
 ## Structure
 
 The project is organized into several folders and key files for managing the data, models, and web application code. Below are the main sections of the project:
@@ -14,12 +21,17 @@ The project is organized into several folders and key files for managing the dat
   - `processed` - Contains processed data.
   - `scalers` - Stores scaler files used to normalize data for user requests.
 - `models` - This folder contains the trained predictive models saved as `.h5` files.
-- `src` - This folder contains the project's source code, with various scripts for managing data flow and user interaction:
+- `src` - This folder contains the project's source code, with various scripts for managing data flow and testing scripts:
   - `Procesado de datos` - Scripts related to data cleaning and preprocessing.
   - `Procesado de modelos` - Contains scripts that perform training and evaluation of predictive models.
   - `Procesos prueba` - Folder for testing scripts of models and WebStreamlit.
   - `StreamlitAntes.py` - Previous version of the Streamlit web application code.
   - `WebStreamlit.py` - Updated version of the web application implemented in Streamlit, allowing users to interact with the models and predict electricity consumption.
+- `stremalit` - This folder contains the code for creating the web interface for user interaction:
+  - `pages` - Scripts related to the display and interaction with each of the different web pages on Streamlit Share.
+  - `style` - Contains a single .css file that allows customization of the web content.
+  - `funciones.py` - A file that stores all the necessary functions for user interaction with the desired predictions.
+  - `mainStreamlit.py` - The main file for managing the web application. 
 - `requirements.txt` - File containing the necessary dependencies and libraries to run the project.
     
 ## Dependency Installation
@@ -42,7 +54,7 @@ pip install -r requirements.txt
 
 To run the electricity consumption prediction model, execute the following command:
 ```bash
-python src/main.py
+python -m streamlit run streamlit/mainStreamlit.py
 ```
 
 ## Data
