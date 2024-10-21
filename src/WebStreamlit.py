@@ -220,7 +220,7 @@ def pagina_industrial():
     temperatura = st.number_input("temperatura media", min_value=0, value=45)
     
     if temperatura < 0 or temperatura > 45:
-        st.error("Por favor, introduce una temperatura válida entre 0 y 35.")
+        st.error("Por favor, introduce una temperatura válida entre 0 y 45.")
 
     tmed = temperatura_def if temperatura == 45 else temperatura
 
@@ -240,7 +240,7 @@ def pagina_industrial():
         valor_prediccion = prediction_ind[0, 0]
 
         # Mostrar el resultado correctamente
-        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion:.2f} KW")
+        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion:.2f} MWh")
         #st.write(f"Forma de prediction_ind: {prediction_ind.shape}, Valor: {prediction_ind}")
 
     if st.sidebar.button("Volver al inicio"):
@@ -288,7 +288,7 @@ def pagina_residencial():
         valor_prediccion_res = prediction_res[0, 0]
 
         # Mostrar el resultado correctamente
-        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion_res:.2f} KW")
+        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion_res:.2f} MWh")
         #st.write(f"Forma de prediction_ind: {prediction_res.shape}, Valor: {prediction_res}")
 
     if st.sidebar.button("Volver al inicio"):
@@ -337,14 +337,14 @@ def pagina_servicios():
     # Crear la lista de nuevos datos proporcionados por el usuario (debe tener la misma longitud)
     datos_usuario_ser = np.array([findesemana, festivos, pernoctaciones, tmed, poblacion, t_1])
     # Combinar los datos anteriores y los proporcionados en un solo array
-    datos_ind = np.vstack([datos_anteriro_ser, datos_usuario_ser])
+    datos_ser = np.vstack([datos_anteriro_ser, datos_usuario_ser])
 
     if st.button("Predecir Consumo"):
-        prediction_ser = predecir_servicios(datos_usuario_ser)
+        prediction_ser = predecir_servicios(datos_ser)
         valor_prediccion_ser = prediction_ser[0, 0]
 
         # Mostrar el resultado correctamente
-        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion_ser:.2f} KW")
+        st.success(f"El día {fecha} se prevé un consumo de {valor_prediccion_ser:.2f} MWh")
         #st.write(f"Forma de prediction_ind: {prediction_ser.shape}, Valor: {prediction_ser}")
 
 

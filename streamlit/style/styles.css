@@ -1,0 +1,28 @@
+/* Color de texto en toda la app */
+h1, h2, h3, h4, h5, p, label, div, .stMarkdown {
+    color: white !important;
+}
+/* Botones personalizados oscuros */
+div.stButton > button {
+    background-color: #333333 !important;  /* Gris oscuro */
+    color: white !important;               /* Texto blanco */
+    border: 1px solid #444444;             /* Borde más claro */
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+div.stButton > button:hover {
+    background-color: #555555 !important;  /* Gris más claro al pasar el cursor */
+    border-color: #666666;
+}
+/* Mensajes de éxito más resaltados */
+.stAlert[data-baseweb="notification"] {
+    background-color: #198754 !important;  /* Verde intenso */
+    color: white !important;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 18px;
+}
