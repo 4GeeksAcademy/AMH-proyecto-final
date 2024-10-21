@@ -1,27 +1,32 @@
-# Data Science Project Boilerplate
+# Electricity Consumption Forecast in Barcelona
 
-This boilerplate is designed to kickstart data science projects by providing a basic setup for database connections, data processing, and machine learning model development. It includes a structured folder organization for your datasets and a set of pre-defined Python packages necessary for most data science tasks.
+This project aims to predict electricity consumption in the province of Barcelona using historical data and machine learning techniques. We use climate, demographic, macroeconomic, economic shocks, tourism indicators, and holiday data to train models that predict daily electricity consumption.
 
 ## Structure
 
-The project is organized as follows:
+The project is organized into several folders and key files for managing the data, models, and web application code. Below are the main sections of the project:
 
-- `app.py` - The main Python script that you run for your project.
-- `explore.py` - A notebook to explore data, play around, visualize, clean, etc. Ideally the notebook code should be migrated to the app.py when moving to production.
-- `utils.py` - This file contains utility code for operations like database connections.
-- `requirements.txt` - This file contains the list of necessary python packages.
-- `models/` - This directory should contain your SQLAlchemy model classes.
-- `data/` - This directory contains the following subdirectories:
-  - `interin/` - For intermediate data that has been transformed.
-  - `processed/` - For the final data to be used for modeling.
-  - `raw/` - For raw data without any processing.
- 
+- `data` - This folder stores the data used in the project, organized into various subfolders:
+  - `DF_modelos` - Stores the final processed DataFrames.
+  - `Final_Data` - Contains the CSV files with the data used in the DataFrames for different sectors (residential, industrial, services).
+  - `imagen` - Contains images used in the web application, such as wallpapers.
+  - `interim` - Contains the raw, unprocessed data.
+  - `processed` - Contains processed data.
+  - `scalers` - Stores scaler files used to normalize data for user requests.
+- `models` - This folder contains the trained predictive models saved as `.h5` files.
+- `src` - This folder contains the project's source code, with various scripts for managing data flow and user interaction:
+  - `Procesado de datos` - Scripts related to data cleaning and preprocessing.
+  - `Procesado de modelos` - Contains scripts that perform training and evaluation of predictive models.
+  - `Procesos prueba` - Folder for testing scripts of models and WebStreamlit.
+  - `StreamlitAntes.py` - Previous version of the Streamlit web application code.
+  - `WebStreamlit.py` - Updated version of the web application implemented in Streamlit, allowing users to interact with the models and predict electricity consumption.
+- `requirements.txt` - File containing the necessary dependencies and libraries to run the project.
     
-## Setup
+## Dependency Installation
 
 **Prerequisites**
 
-Make sure you have Python 3.11+ installed on your. You will also need pip for installing the Python packages.
+Make sure you have Python 3.11+ installed. You will also need pip to install the required Python packages.
 
 **Installation**
 
@@ -33,57 +38,34 @@ Navigate to the project directory and install the required Python packages:
 pip install -r requirements.txt
 ```
 
-**Create a database (if needed)**
+## Running the Project
 
-Create a new database within the Postgres engine by customizing and executing the following command: `$ createdb -h localhost -U <username> <db_name>`
-Connect to the Postgres engine to use your database, manipulate tables and data: `$ psql -h localhost -U <username> <db_name>`
-NOTE: Remember to check the ./.env file information to get the username and db_name.
-
-Once you are inside PSQL you will be able to create tables, make queries, insert, update or delete data and much more!
-
-**Environment Variables**
-
-Create a .env file in the project root directory to store your environment variables, such as your database connection string:
-
-```makefile
-DATABASE_URL="your_database_connection_url_here"
-```
-
-## Running the Application
-
-To run the application, execute the app.py script from the root of the project directory:
-
+To run the electricity consumption prediction model, execute the following command:
 ```bash
-python app.py
+python src/main.py
 ```
 
-## Adding Models
+## Data
 
-To add SQLAlchemy model classes, create new Python script files inside the models/ directory. These classes should be defined according to your database schema.
+The data used in this project includes climate variables, population data, and energy consumption data from 2019 to 2024.
 
-Example model definition (`models/example_model.py`):
+- Electricity consumption (MWh): https://datos.gob.es/es/catalogo/l01080193-consumo-de-electricidad-mwh-por-codigo-postal-sector-economico-y-tramo-horario
+- Climate variables (Average Temperature, Precipitation, and Wind Speed): https://opendata.aemet.es/centrodedescargas/inicio
+- Sociodemographic variables (Population, Income, Employment, GDP, and Overnight Stays): https://www.ine.es/
+- Temporal variables and social subsidies: Independent searches on the internet.
 
-```py
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String
+## Models
 
-Base = declarative_base()
+The models used are as follows:
+-	XGBoost (Extreme Gradient Boosting): Identifies potential variables that may explain electricity consumption by sector.
+-	LSTM (Long Short-Term Memory): Makes predictions of electricity demand by sector.
 
-class ExampleModel(Base):
-    __tablename__ = 'example_table'
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
+## Contributions
 
-```
+If you wish to contribute to this project, please fork and submit a pull request.
 
-## Working with Data
+## Contact
 
-You can place your raw datasets in the data/raw directory, intermediate datasets in data/interim, and the processed datasets ready for analysis in data/processed.
-
-To process data, you can modify the app.py script to include your data processing steps, utilizing pandas for data manipulation and analysis.
-
-## Contributors
-
-This template was built as part of the 4Geeks Academy [Data Science and Machine Learning Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about [4Geeks Academy's BootCamp programs](https://4geeksacademy.com/us/programs) here.
-
-Other templates and resources like this can be found on the school GitHub page.
+For questions or comments, contact: 
+- Héctor Postigo Gómez (hpostigogomez@gmail.com)
+- Alba Estévez Bauluz (albaebauluz@hotmail.com)
